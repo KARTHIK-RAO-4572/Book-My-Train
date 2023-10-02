@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
-const { UserSchema } = require('./schemas');
+const { UserSchema, TrainSchema, AdminSchema } = require('./schemas');
 var userInfo = mongoose.model('userInfo',UserSchema);
-
+var trainInfo = mongoose.model('trainInfo',TrainSchema);
+var adminInfo = mongoose.model('adminInfo',AdminSchema);
 module.exports = {
-    userInfo
-}
+    userInfo,
+    trainInfo,
+    adminInfo
+};

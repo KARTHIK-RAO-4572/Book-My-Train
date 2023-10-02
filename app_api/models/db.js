@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const PORT = process.env.PORT || 3000
 const readLine = require('readline');
 
-let dbURL = 'mongodb://127.0.0.1:27017/CoreData';
+let dbURL = 'mongodb+srv://KARTHIKRAO:wpm@cluster0.45rt9q7.mongodb.net/?retryWrites=true&w=majority';
 
 const connectDB = async () => {
     try {
