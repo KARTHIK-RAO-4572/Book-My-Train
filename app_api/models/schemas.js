@@ -32,6 +32,10 @@ var TrainSchema = {
         type: String,
         required: true
     },
+    "cost":{
+        type:Number,
+        required: true
+    },
     "from":{
         type: String,
         required: true
@@ -41,7 +45,7 @@ var TrainSchema = {
         required: true
     },
     "boarding_date":{
-        type: String,
+        type: Date,
         required: true
     },
     "boarding_time":{

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sorry!!</title>
+    <style>
+        body{
+            background-color: black;
+        }
+        .hello{
+            margin-left: 50px;
+            color: aliceblue;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="hello">
+    <h1>User Already exists !</h1>
+
+    <div id="timer">Loading...</div>
+    </div>
+
+    <script>
+        var countdownTime = 5;
+
+        function updateTimer() {
+            var timerElement = document.getElementById("timer");
+
+            if (countdownTime >= 0) {
+                timerElement.textContent = "Redirecting to Login page in  " + countdownTime + " seconds";
+                countdownTime--;
+
+                setTimeout(updateTimer, 1000);
+            } else {
+               
+                window.location.href = "http://127.0.0.1:3000/Login"; 
+            }
+        }
+
+        
+        window.onload = updateTimer;
+    </script>
+</body>
+</html>

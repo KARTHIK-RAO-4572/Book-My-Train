@@ -1,0 +1,23 @@
+doctype html 
+html. 
+   <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Train Ticket Booking</title>
+   <link rel="stylesheet" href="stylesheets/getTrain.css">
+   <script src="scripts/gettrain.js"></script>
+   </head>
+   <body>
+   <header>
+   <h1>Ticket Booking</h1>
+   </header>
+   <div class="container">
+   each train in trains 
+    <div class="train">
+    h2= train.train_name
+    h2=train.train_no
+    p= train.cost
+    <button class="btn" onclick="bookTicket(train.train_name, train.cost)">Book Ticket</button>
+    </div>
+   </div>
+   </body>

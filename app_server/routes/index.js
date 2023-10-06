@@ -23,4 +23,7 @@ router.post("/Signup",upload.none(),ctrls.postSignup)
 // Test Route
 router.get("/test",ctrls.test);
 
+// Show Trains page
+router.post("/Showtrains",ctrls.getTrain);
+
 module.exports = router;

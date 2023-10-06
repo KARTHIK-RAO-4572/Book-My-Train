@@ -9,4 +9,6 @@ router.get('/', function(req, res, next) {
 router.get('/admin',private.getAdminPage);
 //POST ADMIN
 router.post('/admin',private.postAdminPage);
+//PUT TRAIN
+router.post('admin/push',private.putTrain)
 module.exports = router;
