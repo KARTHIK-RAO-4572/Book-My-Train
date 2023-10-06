@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const PORT = process.env.PORT || 3000
 const readLine = require('readline');
+const app = require('../../app')
 
 let dbURL = 'mongodb+srv://KARTHIKRAO:wpm@cluster0.45rt9q7.mongodb.net/?retryWrites=true&w=majority';
 
@@ -67,7 +68,7 @@ process.on('SIGTERM', () => {
 
 if (process.env.NODE_ENV === 'production') {
     connectDB().then(() => {
-        app.listen(PORT, () => {
+        app.app.listen(PORT, () => {
             console.log("listening for requests");
         })
     })
