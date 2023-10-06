@@ -28,7 +28,7 @@ var postAdminPage = async function(req,res){
 // PUT TRAIN DATA
 const putTrain = async function(req,res){
     try{
-        await model.trainInfo.create(
+        await models.trainInfo.create(
             {
                 train_name:req.body.train_name,
                 train_no:req.body.train_no,
