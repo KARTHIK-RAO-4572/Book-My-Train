@@ -29,10 +29,55 @@ var postLogin = async function(req,res){
 }
 // POST show trains
 var getTrain = async function(req,res){
-    const docu = await models.trainInfo.findOne({train_number:1,train_name:1,cost:1});
-    res.render('getTrain.jade',{trains:[{train_name:"Ajantha",train_no:17064,cost:4000},{train_name:"Duronto",train_no:17065,cost:5000}]});
-}
+    var fromm = req.body.from
+    var tooo = req.body.to
+    if(fromm === "Secunderabad"){
+         fromm = "SC";
+    }
+    else if(fromm === "Mumbai"){
+        fromm = "MCC";
+    }
+    else if(fromm === "Chennai"){
+        fromm = "MAS";
+    }
+    else if(fromm === "Kacheguda"){
+        fromm = "KCG";
+    }
+    else if(fromm === "hyb"){
+        fromm = "HYB";
+    }
+    if(tooo === "Secunderabad"){
+        tooo = "SC";
+    }
+    else if(tooo === "Mumbai"){
+       tooo = "MCC";
+    }
+    else if(tooo === "Chennai"){
+       tooo = "MAS";
+    }
+    else if(tooo === "Kacheguda"){
+       tooo = "KCG";
+    }
+    else if(tooo === "hyb"){
+       tooo = "HYB";
+    }
 
+    const datee = req.body.date
+    if(fromm === tooo)
+    {
+        res.render('same_src.ejs');
+    }
+    else{
+        var titlee = " "
+    const docu = await models.trainInfo.find({from:fromm,to:tooo,boarding_date:datee})
+    // const docu = await models.trainInfo.findOne({train_number:1,train_name:1,cost:1});
+    console.log(docu)
+    if(!docu.length){
+        titlee="Sorry! There are no trains between "+req.body.from+" and "+req.body.to;
+    }
+    res.render('getTrain.jade',{title:titlee,trains:docu});
+}
+}
 
 
 // GET signup page
@@ -96,12 +141,25 @@ var test1 = function(req,res){
 
     }
     
+// PUT BOOK TICKET
+var bookTicket = async function(req,res){
+    const docu = await models.trainInfo.find({from:req.body.from,to:req.body.to,train_no:req.body.trainnumber})
+    if(!docu.number_of_seats){
+        const number = docu.number_of_seats;
+        models.trainInfo.update({from:req.body.from,to:req.body.to,train_no:req.body.trainnumber},{number_of_seats:number-1});
+        res.render('ticket_success.ejs',{seat_number:number});
+    }
+    else{
+        res.render('no_ticket.ejs');
+    }
 
+}
 
 module.exports = {
     Lander,
     getLogin,postLogin,
     getSignup,postSignup,
     test,
-    getTrain
+    getTrain,
+    bookTicket
 };

@@ -21,7 +21,7 @@ router.get("/Signup",ctrls.getSignup) ;
 router.post("/Signup",upload.none(),ctrls.postSignup)
 
 // Test Route
-router.get("/test",ctrls.test);
+router.post("/test",ctrls.bookTicket);
 
 // Show Trains page
 router.post("/Showtrains",ctrls.getTrain);
