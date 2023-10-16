@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+ <head>
+ <meta charset="UTF-8">
+ <title> Enter Train Details</title>
+ <link rel="stylesheet" href="/stylesheets/traininfo.css">
+ 
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ </head>
+ <body>
+ <div class="container">
+ <form action="http://127.0.0.1:3000/users/adminnn/push" name="Train" id="Train" method="post">
+ <img src="/images/BMT.png" width="120" class="custom-image">
+ <div class="title">Train Info</div>
+ <div class="input-box underline">
+ <input type="text" name="train_name" placeholder="Train Name" required>
+ <div class="underline"></div>
+ </div>
+ <div class="input-box">
+ <input type="number" name="train_no" placeholder="Train Number" required>
+ <div class="underline"></div>
+ <div class="input-box">
+    <input type="number" name="cost" placeholder="Cost per ticket" required>
+    <div class="underline"></div>
+ </div>
+ <div class="input-box underline">
+    <input type="text" id="from" name="from" placeholder="Starting Station" required>
+    <div class="underline"></div>
+    </div>
+    <div class="input-box underline">
+      <input type="text" id="to" name="to" placeholder="Destination Station" required>
+      <div class="underline"></div>
+      </div>
+      <div class="input-box underline">
+         <input type="date" name="boarding_date" placeholder="Boarding Date" required>
+         <div class="underline"></div>
+         </div>
+         <div class="input-box underline">
+            <input type="text" name="boarding_time" placeholder="Boarding Time" required>
+            <div class="underline"></div>
+            </div>
+            <div class="input-box underline">
+               <input type="number" name="no_of_seats" placeholder="Number of seats" required>
+               <div class="underline"></div>
+               </div>
+ 
+ <div class="input-box button">
+ <input type="submit" name="" value="Update">
+ </div>
+ </form>
+ </div>
+ </body>
+
