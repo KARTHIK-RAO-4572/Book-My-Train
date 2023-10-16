@@ -9,16 +9,22 @@ html.
    </head>
    <body>
    <header>
-   <h1>Ticket Booking</h1>
+   <h1>List of Trains </h1>
+   <h3> From: #{from} </h3>
+   <h3> To: #{to} </h3>
+   <h3> On Date: #{date}</h3>
    </header>
    <div class="container">
-   h2= title
    each train in trains 
+    <form action="/Showtrainss" method="post">
     <div class="train">
+    <input type="hidden" value= #{train.train_no} name="number" />
+    <input type="hidden" value= #{date} name="datee" />
     h2= train.train_name
-    h2=train.train_no
-    p= train.cost
-    <button class="btn" onclick="bookTicket(train.train_name, train.cost)">Book Ticket</button>
+    h2= train.train_no
+    <h4>Cost: #{train.cost}<h4>
+    <button class="btn" type="submit">Book Ticket</button></a>
     </div>
+    </form>
    </div>
    </body>

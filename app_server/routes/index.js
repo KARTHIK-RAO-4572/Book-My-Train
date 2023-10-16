@@ -26,4 +26,7 @@ router.post("/test",ctrls.bookTicket);
 // Show Trains page
 router.post("/Showtrains",ctrls.getTrain);
 
+// GET ticket
+router.post("/Showtrainss",upload.any(),ctrls.bookTicket);
+
 module.exports = router;

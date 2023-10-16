@@ -51,7 +51,7 @@ var TrainSchema = {
         required: true
     },
     "no_of_seats":{
-        type: String,
+        type: Number,
         required: true
     }
 }

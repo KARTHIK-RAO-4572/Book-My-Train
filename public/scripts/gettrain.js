@@ -1,3 +1,3 @@
-function bookTicket(trainName, cost) {
-alert(`Booking ticket for ${trainName} for ${cost}`);
+function bookTicket(number,date){
+    window.location.href = "http://127.0.0.1:3000/showtrains?"+"no="+number+"&date="+date;
 }

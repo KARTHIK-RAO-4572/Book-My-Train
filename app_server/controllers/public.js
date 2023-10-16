@@ -12,7 +12,7 @@ var getLogin = function(req,res){
 
 //POST Login page
 var postLogin = async function(req,res){
-    console.log("entered here");
+    console.log(req.body.email);
     if(!req.body.email || !req.body.password){
         res.status(400).json({"message":"All Fields are mandatory"});
     }
@@ -76,7 +76,7 @@ var postSignup = async function(req,res){
     }
 }
 
-// POST show trains
+// GET show trains
 var getTrain = async function(req,res){
     var fromm = req.body.from
     var tooo = req.body.to
@@ -124,20 +124,29 @@ var getTrain = async function(req,res){
     if(!docu.length){
         titlee="Sorry! There are no trains between "+req.body.from+" and "+req.body.to;
     }
-    res.render('getTrain.jade',{title:titlee,trains:docu});
+    res.render('getTrain.jade',{
+        from:req.body.from,
+        to:req.body.to,
+        trains:docu,
+        date:req.body.date});
 }
 }
 
 // PUT BOOK TICKET
 var bookTicket = async function(req,res){
-    const docu = await models.trainInfo.find({from:req.body.from,to:req.body.to,train_no:req.body.trainnumber})
-    if(!docu.number_of_seats){
-        const number = docu.number_of_seats;
-        models.trainInfo.update({from:req.body.from,to:req.body.to,train_no:req.body.trainnumber},{number_of_seats:number-1});
-        res.render('ticket_success.ejs',{seat_number:number});
+    var docu = await models.trainInfo.findOne({train_no:req.body.number,boarding_date:req.body.datee});
+    console.log(docu);
+    console.log(docu.no_of_seats);
+    if(docu.no_of_seats === 0){
+        res.render('no_ticket.ejs');
     }
     else{
-        res.render('no_ticket.ejs');
+        const number = docu.no_of_seats;
+        docu.no_of_seats = docu.no_of_seats -1;
+        docu.save();
+        res.status(200);
+        res.render('ticket_success.jade',{seat_number:number,
+        template:docu });   
     }
 }
 
@@ -145,6 +154,10 @@ var bookTicket = async function(req,res){
 var test = function(req,res){
     res.render('index.jade',{title:"This is jade"});
 }
+
+//GET Train Details
+var show
+
 module.exports = {
     Lander,
     getLogin,postLogin,
