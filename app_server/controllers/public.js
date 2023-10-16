@@ -4,29 +4,78 @@ require('multer')
 var Lander = function(req,res){
     res.render('Lander.ejs');
 }
-// GET login page
+
+// GET Login page
 var getLogin = function(req,res){
     res.render('Login.ejs');
 }
 
-//POST login page
+//POST Login page
 var postLogin = async function(req,res){
-    const entered_email = req.body.email;
-    const entered_password = req.body.password;
-    try{
-    const docu = await models.userInfo.findOne({email:entered_email},{password:1,username:1}).exec();
-        if(docu.password === entered_password){
+    console.log("entered here");
+    if(!req.body.email || !req.body.password){
+        res.status(400).json({"message":"All Fields are mandatory"});
+    }
+    //Check user is there or not
+    const docu = await models.userInfo.findOne({email:req.body.email}).exec();
+    if(docu){
+        try {
+        if(docu.validatePassword(req.body.password)){
+            //return JWT token also
+            res.status(200);
             res.render('Home.ejs');
         }
         else{
+            res.status(200);
             res.render('wrong_pass.ejs');
+        }}
+        catch(err){
+            console.log("Error at Post Login Page : "+err);
+            res.status(500).json({"message":"Sorry! We have a Technical glitch"});
         }
     }
-    catch(err){
-        console.log(err);
-        res.render('wrong_pass.ejs');
+    else{
+        res.status(400).json({"message":"User Do not Exist!"});
+    }
+
+}
+
+// GET Signup page
+var getSignup = function(req,res){
+    res.render('signup.ejs');
+}
+
+//POST Signup page
+var postSignup = async function(req,res){
+    const email = req.body.email;
+    if(!req.body.email || !req.body.password || !req.body.phone || !req.body.username){
+        res.status(400).json({"message":"All fields are mandatory to fill!"});
+    }
+    //Check for existing user
+    var docu = await models.userInfo.findOne({email:email},{email:1}).exec();
+    if(!docu){
+        try{
+             //instantiate model
+             var newUser = models.userInfo();
+             newUser.email = email;
+             newUser.phone = req.body.phone;
+             newUser.username = req.body.username;
+             newUser.setPassword(req.body.password);
+             newUser.save();
+             res.status(201);
+             res.render('signup_success.ejs');
+        }
+        catch(err){
+            console.log("error occured: "+err);
+            res.status(500).json({"message":"error occured: "+err});
+        }
+    }
+    else
+    {
+        res.render('User_already.ejs');
     }
 }
+
 // POST show trains
 var getTrain = async function(req,res){
     var fromm = req.body.from
@@ -79,68 +128,6 @@ var getTrain = async function(req,res){
 }
 }
 
-
-// GET signup page
-var getSignup = function(req,res){
-    res.render('signup.ejs');
-}
-
-//GET Test route
-var test = function(req,res){
-    res.render('index.jade',{title:"This is jade"});
-}
-
-//POST signup page
-var postSignup = async function(req,res){
-    entered_email = req.body.email;
-    var docu = await models.userInfo.findOne({email:entered_email},{email:1}).exec();
-    if(!docu)
-    {
-        try{
-            await models.userInfo.create({
-                username:req.body.username,
-                password:req.body.password,
-                phone:req.body.phone,
-                email:req.body.email
-    
-            });
-            res.render('signup_success.ejs');
-        }
-        catch(err){
-            console.log(err);
-            res.render('Lander.ejs');
-        }
-    }
-    else if(docu.email === entered_email)
-    {   console.log(docu.email);
-        console.log("entered");
-        res.render('User_already.ejs');
-    }
-}
-//TEST 
-var test1 = function(req,res){
-    var username = "Karthik Rao";
-    var password = "Helloworld";
-    var phone = 6304228571;
-    var email = "test@123";
-    try{
-        models.userInfo.create(
-            {
-                "username": username,
-                "password": password,
-                "phone": phone,
-                "email": email
-            }
-        )
-        res.status(200).json({message:"suceesful insertion"});
-    }
-    catch(err)
-    {
-        res.status(500).send(err);
-    }
-
-    }
-    
 // PUT BOOK TICKET
 var bookTicket = async function(req,res){
     const docu = await models.trainInfo.find({from:req.body.from,to:req.body.to,train_no:req.body.trainnumber})
@@ -152,9 +139,12 @@ var bookTicket = async function(req,res){
     else{
         res.render('no_ticket.ejs');
     }
-
 }
 
+//GET Test route
+var test = function(req,res){
+    res.render('index.jade',{title:"This is jade"});
+}
 module.exports = {
     Lander,
     getLogin,postLogin,

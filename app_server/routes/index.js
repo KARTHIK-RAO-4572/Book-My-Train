@@ -6,8 +6,8 @@ var ctrls = require('../controllers/public')
 /* GET home page. */
 router.get('/', ctrls.Lander);
 
-//GET test
-router.get('/test',ctrls.test)
+//POST test
+//router.post('/test',upload.none(),ctrls.jwtTest)
 /* GET login Page */
 router.get('/Login',ctrls.getLogin);
 
