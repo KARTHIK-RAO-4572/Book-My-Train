@@ -5,16 +5,6 @@ const app = require('../../app')
 
 let dbURL = 'mongodb+srv://KARTHIKRAO:wpm@cluster0.45rt9q7.mongodb.net/?retryWrites=true&w=majority';
 
-const connectDB = async () => {
-    try {
-        const conn = await mongoose.connect(process.env.MONGO_URI);
-        console.log('MongoDB Connected: ' + process.env.MONGO_URI);
-    } catch (error) {
-        console.log('Error: ' + error);
-        process.exit(1);
-    }
-}
-
 const connect = () => {
     setTimeout(() => mongoose.connect(dbURL), 1000);
 }
@@ -65,14 +55,4 @@ process.on('SIGTERM', () => {
         process.exit(0);
     });
 });
-
-if (process.env.NODE_ENV === 'production') {
-    connectDB().then(() => {
-        app.app.listen(PORT, () => {
-            console.log("listening for requests");
-        })
-    })
-}
-else {
-    connect();
-}
+connect();
