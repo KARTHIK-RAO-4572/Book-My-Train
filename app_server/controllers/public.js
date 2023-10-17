@@ -125,6 +125,7 @@ var getTrain = async function(req,res){
         titlee="Sorry! There are no trains between "+req.body.from+" and "+req.body.to;
     }
     res.render('getTrain.jade',{
+        title:titlee,
         from:req.body.from,
         to:req.body.to,
         trains:docu,
